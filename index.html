@@ -1,0 +1,2508 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
+        <script src="js/multi-style-layer.js"></script>
+        <script src="js/leaflet-svg-shape-markers.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="data/Mizoram1_1.js"></script>
+        <script src="data/ArunachalPradesh1_2.js"></script>
+        <script src="data/DNHaveli1_3.js"></script>
+        <script src="data/Tripura2_4.js"></script>
+        <script src="data/Manipur2_5.js"></script>
+        <script src="data/Puducherry7_6.js"></script>
+        <script src="data/Goa7_7.js"></script>
+        <script src="data/ANIslands11_8.js"></script>
+        <script src="data/Jharkhand17_9.js"></script>
+        <script src="data/Ladakh15_10.js"></script>
+        <script src="data/Chandigarh21_11.js"></script>
+        <script src="data/Assam29_12.js"></script>
+        <script src="data/Chhattisgarh31_13.js"></script>
+        <script src="data/HimachalPradesh32_14.js"></script>
+        <script src="data/Uttarakhand35_15.js"></script>
+        <script src="data/Odisha54_16.js"></script>
+        <script src="data/Bihar64_17.js"></script>
+        <script src="data/Westbengal134_18.js"></script>
+        <script src="data/Punjab170_19.js"></script>
+        <script src="data/Haryana195_20.js"></script>
+        <script src="data/Karnataka232_21.js"></script>
+        <script src="data/JK245_22.js"></script>
+        <script src="data/Kerala375_23.js"></script>
+        <script src="data/AndhraPradesh420_24.js"></script>
+        <script src="data/Gujarat516_25.js"></script>
+        <script src="data/Uttarpradesh483_26.js"></script>
+        <script src="data/Telangana531_27.js"></script>
+        <script src="data/MadhyaPradesh562_28.js"></script>
+        <script src="data/Rajasthan815_29.js"></script>
+        <script src="data/TamilNadu1075_30.js"></script>
+        <script src="data/Delhi1154_31.js"></script>
+        <script src="data/Maharastra1982_32.js"></script>
+        <script src="data/ScrolldownforStatewisedata_33.js"></script>
+        <script src="data/DistrictwiseCOVID19_34.js"></script>
+        <script src="data/Cured1086_35.js"></script>
+        <script src="data/TotalActivecases9222_36.js"></script>
+        <script src="data/Lastupdated130420200952AM_37.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString') {
+              highlightLayer.setStyle({
+                color: '#ffff00',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: '#ffff00',
+                fillOpacity: 1
+              });
+            }
+            highlightLayer.openPopup();
+        }
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:4
+        }).fitBounds([[-3.7001667993567295,37.74384823378753],[44.05095506197251,127.82184906344585]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        var layer_Esribackgroundlayer_0 = L.tileLayer('http://server.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 4,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 22
+        });
+        layer_Esribackgroundlayer_0;
+        map.addLayer(layer_Esribackgroundlayer_0);
+        function pop_Mizoram1_1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Mizoram1_1_0() {
+            return {
+                pane: 'pane_Mizoram1_1',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(190,178,151,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Mizoram1_1');
+        map.getPane('pane_Mizoram1_1').style.zIndex = 401;
+        map.getPane('pane_Mizoram1_1').style['mix-blend-mode'] = 'normal';
+        var layer_Mizoram1_1 = new L.geoJson(json_Mizoram1_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Mizoram1_1',
+            layerName: 'layer_Mizoram1_1',
+            pane: 'pane_Mizoram1_1',
+            onEachFeature: pop_Mizoram1_1,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Mizoram1_1_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Mizoram1_1);
+        map.addLayer(layer_Mizoram1_1);
+        function pop_ArunachalPradesh1_2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_ArunachalPradesh1_2_0() {
+            return {
+                pane: 'pane_ArunachalPradesh1_2',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(196,60,57,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_ArunachalPradesh1_2');
+        map.getPane('pane_ArunachalPradesh1_2').style.zIndex = 402;
+        map.getPane('pane_ArunachalPradesh1_2').style['mix-blend-mode'] = 'normal';
+        var layer_ArunachalPradesh1_2 = new L.geoJson(json_ArunachalPradesh1_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_ArunachalPradesh1_2',
+            layerName: 'layer_ArunachalPradesh1_2',
+            pane: 'pane_ArunachalPradesh1_2',
+            onEachFeature: pop_ArunachalPradesh1_2,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_ArunachalPradesh1_2_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_ArunachalPradesh1_2);
+        map.addLayer(layer_ArunachalPradesh1_2);
+        function pop_DNHaveli1_3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_DNHaveli1_3_0() {
+            return {
+                pane: 'pane_DNHaveli1_3',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(164,113,88,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_DNHaveli1_3');
+        map.getPane('pane_DNHaveli1_3').style.zIndex = 403;
+        map.getPane('pane_DNHaveli1_3').style['mix-blend-mode'] = 'normal';
+        var layer_DNHaveli1_3 = new L.geoJson(json_DNHaveli1_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_DNHaveli1_3',
+            layerName: 'layer_DNHaveli1_3',
+            pane: 'pane_DNHaveli1_3',
+            onEachFeature: pop_DNHaveli1_3,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_DNHaveli1_3_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_DNHaveli1_3);
+        map.addLayer(layer_DNHaveli1_3);
+        function pop_Tripura2_4(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Tripura2_4_0() {
+            return {
+                pane: 'pane_Tripura2_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(243,166,178,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Tripura2_4');
+        map.getPane('pane_Tripura2_4').style.zIndex = 404;
+        map.getPane('pane_Tripura2_4').style['mix-blend-mode'] = 'normal';
+        var layer_Tripura2_4 = new L.geoJson(json_Tripura2_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Tripura2_4',
+            layerName: 'layer_Tripura2_4',
+            pane: 'pane_Tripura2_4',
+            onEachFeature: pop_Tripura2_4,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Tripura2_4_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Tripura2_4);
+        map.addLayer(layer_Tripura2_4);
+        function pop_Manipur2_5(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Manipur2_5_0() {
+            return {
+                pane: 'pane_Manipur2_5',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(196,60,57,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Manipur2_5');
+        map.getPane('pane_Manipur2_5').style.zIndex = 405;
+        map.getPane('pane_Manipur2_5').style['mix-blend-mode'] = 'normal';
+        var layer_Manipur2_5 = new L.geoJson(json_Manipur2_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Manipur2_5',
+            layerName: 'layer_Manipur2_5',
+            pane: 'pane_Manipur2_5',
+            onEachFeature: pop_Manipur2_5,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Manipur2_5_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Manipur2_5);
+        map.addLayer(layer_Manipur2_5);
+        function pop_Puducherry7_6(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Puducherry7_6_0() {
+            return {
+                pane: 'pane_Puducherry7_6',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(125,139,143,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Puducherry7_6');
+        map.getPane('pane_Puducherry7_6').style.zIndex = 406;
+        map.getPane('pane_Puducherry7_6').style['mix-blend-mode'] = 'normal';
+        var layer_Puducherry7_6 = new L.geoJson(json_Puducherry7_6, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Puducherry7_6',
+            layerName: 'layer_Puducherry7_6',
+            pane: 'pane_Puducherry7_6',
+            onEachFeature: pop_Puducherry7_6,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Puducherry7_6_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Puducherry7_6);
+        map.addLayer(layer_Puducherry7_6);
+        function pop_Goa7_7(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Goa7_7_0() {
+            return {
+                pane: 'pane_Goa7_7',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(114,155,111,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Goa7_7');
+        map.getPane('pane_Goa7_7').style.zIndex = 407;
+        map.getPane('pane_Goa7_7').style['mix-blend-mode'] = 'normal';
+        var layer_Goa7_7 = new L.geoJson(json_Goa7_7, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Goa7_7',
+            layerName: 'layer_Goa7_7',
+            pane: 'pane_Goa7_7',
+            onEachFeature: pop_Goa7_7,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Goa7_7_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Goa7_7);
+        map.addLayer(layer_Goa7_7);
+        function pop_ANIslands11_8(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_ANIslands11_8_0() {
+            return {
+                pane: 'pane_ANIslands11_8',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(225,89,137,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_ANIslands11_8');
+        map.getPane('pane_ANIslands11_8').style.zIndex = 408;
+        map.getPane('pane_ANIslands11_8').style['mix-blend-mode'] = 'normal';
+        var layer_ANIslands11_8 = new L.geoJson(json_ANIslands11_8, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_ANIslands11_8',
+            layerName: 'layer_ANIslands11_8',
+            pane: 'pane_ANIslands11_8',
+            onEachFeature: pop_ANIslands11_8,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_ANIslands11_8_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_ANIslands11_8);
+        map.addLayer(layer_ANIslands11_8);
+        function pop_Jharkhand17_9(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Jharkhand17_9_0() {
+            return {
+                pane: 'pane_Jharkhand17_9',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(183,72,75,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Jharkhand17_9');
+        map.getPane('pane_Jharkhand17_9').style.zIndex = 409;
+        map.getPane('pane_Jharkhand17_9').style['mix-blend-mode'] = 'normal';
+        var layer_Jharkhand17_9 = new L.geoJson(json_Jharkhand17_9, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Jharkhand17_9',
+            layerName: 'layer_Jharkhand17_9',
+            pane: 'pane_Jharkhand17_9',
+            onEachFeature: pop_Jharkhand17_9,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Jharkhand17_9_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Jharkhand17_9);
+        map.addLayer(layer_Jharkhand17_9);
+        function pop_Ladakh15_10(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Ladakh15_10_0() {
+            return {
+                pane: 'pane_Ladakh15_10',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(190,207,80,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Ladakh15_10');
+        map.getPane('pane_Ladakh15_10').style.zIndex = 410;
+        map.getPane('pane_Ladakh15_10').style['mix-blend-mode'] = 'normal';
+        var layer_Ladakh15_10 = new L.geoJson(json_Ladakh15_10, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Ladakh15_10',
+            layerName: 'layer_Ladakh15_10',
+            pane: 'pane_Ladakh15_10',
+            onEachFeature: pop_Ladakh15_10,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Ladakh15_10_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Ladakh15_10);
+        map.addLayer(layer_Ladakh15_10);
+        function pop_Chandigarh21_11(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Chandigarh21_11_0() {
+            return {
+                pane: 'pane_Chandigarh21_11',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(125,139,143,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Chandigarh21_11');
+        map.getPane('pane_Chandigarh21_11').style.zIndex = 411;
+        map.getPane('pane_Chandigarh21_11').style['mix-blend-mode'] = 'normal';
+        var layer_Chandigarh21_11 = new L.geoJson(json_Chandigarh21_11, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Chandigarh21_11',
+            layerName: 'layer_Chandigarh21_11',
+            pane: 'pane_Chandigarh21_11',
+            onEachFeature: pop_Chandigarh21_11,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Chandigarh21_11_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Chandigarh21_11);
+        map.addLayer(layer_Chandigarh21_11);
+        function pop_Assam29_12(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Assam29_12_0() {
+            return {
+                pane: 'pane_Assam29_12',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(190,178,151,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Assam29_12');
+        map.getPane('pane_Assam29_12').style.zIndex = 412;
+        map.getPane('pane_Assam29_12').style['mix-blend-mode'] = 'normal';
+        var layer_Assam29_12 = new L.geoJson(json_Assam29_12, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Assam29_12',
+            layerName: 'layer_Assam29_12',
+            pane: 'pane_Assam29_12',
+            onEachFeature: pop_Assam29_12,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Assam29_12_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Assam29_12);
+        map.addLayer(layer_Assam29_12);
+        function pop_Chhattisgarh31_13(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Chhattisgarh31_13_0() {
+            return {
+                pane: 'pane_Chhattisgarh31_13',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(133,182,111,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Chhattisgarh31_13');
+        map.getPane('pane_Chhattisgarh31_13').style.zIndex = 413;
+        map.getPane('pane_Chhattisgarh31_13').style['mix-blend-mode'] = 'normal';
+        var layer_Chhattisgarh31_13 = new L.geoJson(json_Chhattisgarh31_13, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Chhattisgarh31_13',
+            layerName: 'layer_Chhattisgarh31_13',
+            pane: 'pane_Chhattisgarh31_13',
+            onEachFeature: pop_Chhattisgarh31_13,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Chhattisgarh31_13_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Chhattisgarh31_13);
+        map.addLayer(layer_Chhattisgarh31_13);
+        function pop_HimachalPradesh32_14(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_HimachalPradesh32_14_0() {
+            return {
+                pane: 'pane_HimachalPradesh32_14',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(232,113,141,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_HimachalPradesh32_14');
+        map.getPane('pane_HimachalPradesh32_14').style.zIndex = 414;
+        map.getPane('pane_HimachalPradesh32_14').style['mix-blend-mode'] = 'normal';
+        var layer_HimachalPradesh32_14 = new L.geoJson(json_HimachalPradesh32_14, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_HimachalPradesh32_14',
+            layerName: 'layer_HimachalPradesh32_14',
+            pane: 'pane_HimachalPradesh32_14',
+            onEachFeature: pop_HimachalPradesh32_14,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_HimachalPradesh32_14_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_HimachalPradesh32_14);
+        map.addLayer(layer_HimachalPradesh32_14);
+        function pop_Uttarakhand35_15(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Uttarakhand35_15_0() {
+            return {
+                pane: 'pane_Uttarakhand35_15',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(232,113,141,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Uttarakhand35_15');
+        map.getPane('pane_Uttarakhand35_15').style.zIndex = 415;
+        map.getPane('pane_Uttarakhand35_15').style['mix-blend-mode'] = 'normal';
+        var layer_Uttarakhand35_15 = new L.geoJson(json_Uttarakhand35_15, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Uttarakhand35_15',
+            layerName: 'layer_Uttarakhand35_15',
+            pane: 'pane_Uttarakhand35_15',
+            onEachFeature: pop_Uttarakhand35_15,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Uttarakhand35_15_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Uttarakhand35_15);
+        map.addLayer(layer_Uttarakhand35_15);
+        function pop_Odisha54_16(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Odisha54_16_0() {
+            return {
+                pane: 'pane_Odisha54_16',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(145,82,45,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Odisha54_16');
+        map.getPane('pane_Odisha54_16').style.zIndex = 416;
+        map.getPane('pane_Odisha54_16').style['mix-blend-mode'] = 'normal';
+        var layer_Odisha54_16 = new L.geoJson(json_Odisha54_16, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Odisha54_16',
+            layerName: 'layer_Odisha54_16',
+            pane: 'pane_Odisha54_16',
+            onEachFeature: pop_Odisha54_16,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Odisha54_16_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Odisha54_16);
+        map.addLayer(layer_Odisha54_16);
+        function pop_Bihar64_17(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Bihar64_17_0() {
+            return {
+                pane: 'pane_Bihar64_17',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(145,82,45,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Bihar64_17');
+        map.getPane('pane_Bihar64_17').style.zIndex = 417;
+        map.getPane('pane_Bihar64_17').style['mix-blend-mode'] = 'normal';
+        var layer_Bihar64_17 = new L.geoJson(json_Bihar64_17, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Bihar64_17',
+            layerName: 'layer_Bihar64_17',
+            pane: 'pane_Bihar64_17',
+            onEachFeature: pop_Bihar64_17,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Bihar64_17_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Bihar64_17);
+        map.addLayer(layer_Bihar64_17);
+        function pop_Westbengal134_18(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Westbengal134_18_0() {
+            return {
+                pane: 'pane_Westbengal134_18',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,158,23,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Westbengal134_18');
+        map.getPane('pane_Westbengal134_18').style.zIndex = 418;
+        map.getPane('pane_Westbengal134_18').style['mix-blend-mode'] = 'normal';
+        var layer_Westbengal134_18 = new L.geoJson(json_Westbengal134_18, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Westbengal134_18',
+            layerName: 'layer_Westbengal134_18',
+            pane: 'pane_Westbengal134_18',
+            onEachFeature: pop_Westbengal134_18,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Westbengal134_18_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Westbengal134_18);
+        map.addLayer(layer_Westbengal134_18);
+        function pop_Punjab170_19(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Punjab170_19_0() {
+            return {
+                pane: 'pane_Punjab170_19',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(133,182,111,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Punjab170_19');
+        map.getPane('pane_Punjab170_19').style.zIndex = 419;
+        map.getPane('pane_Punjab170_19').style['mix-blend-mode'] = 'normal';
+        var layer_Punjab170_19 = new L.geoJson(json_Punjab170_19, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Punjab170_19',
+            layerName: 'layer_Punjab170_19',
+            pane: 'pane_Punjab170_19',
+            onEachFeature: pop_Punjab170_19,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Punjab170_19_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Punjab170_19);
+        map.addLayer(layer_Punjab170_19);
+        function pop_Haryana195_20(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Haryana195_20_0() {
+            return {
+                pane: 'pane_Haryana195_20',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(141,90,153,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Haryana195_20');
+        map.getPane('pane_Haryana195_20').style.zIndex = 420;
+        map.getPane('pane_Haryana195_20').style['mix-blend-mode'] = 'normal';
+        var layer_Haryana195_20 = new L.geoJson(json_Haryana195_20, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Haryana195_20',
+            layerName: 'layer_Haryana195_20',
+            pane: 'pane_Haryana195_20',
+            onEachFeature: pop_Haryana195_20,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Haryana195_20_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Haryana195_20);
+        map.addLayer(layer_Haryana195_20);
+        function pop_Karnataka232_21(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Karnataka232_21_0() {
+            return {
+                pane: 'pane_Karnataka232_21',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(231,113,72,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Karnataka232_21');
+        map.getPane('pane_Karnataka232_21').style.zIndex = 421;
+        map.getPane('pane_Karnataka232_21').style['mix-blend-mode'] = 'normal';
+        var layer_Karnataka232_21 = new L.geoJson(json_Karnataka232_21, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Karnataka232_21',
+            layerName: 'layer_Karnataka232_21',
+            pane: 'pane_Karnataka232_21',
+            onEachFeature: pop_Karnataka232_21,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Karnataka232_21_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Karnataka232_21);
+        map.addLayer(layer_Karnataka232_21);
+        function pop_JK245_22(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_JK245_22_0() {
+            return {
+                pane: 'pane_JK245_22',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,158,23,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_JK245_22');
+        map.getPane('pane_JK245_22').style.zIndex = 422;
+        map.getPane('pane_JK245_22').style['mix-blend-mode'] = 'normal';
+        var layer_JK245_22 = new L.geoJson(json_JK245_22, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_JK245_22',
+            layerName: 'layer_JK245_22',
+            pane: 'pane_JK245_22',
+            onEachFeature: pop_JK245_22,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_JK245_22_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_JK245_22);
+        map.addLayer(layer_JK245_22);
+        function pop_Kerala375_23(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Kerala375_23_0() {
+            return {
+                pane: 'pane_Kerala375_23',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(152,125,183,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Kerala375_23');
+        map.getPane('pane_Kerala375_23').style.zIndex = 423;
+        map.getPane('pane_Kerala375_23').style['mix-blend-mode'] = 'normal';
+        var layer_Kerala375_23 = new L.geoJson(json_Kerala375_23, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Kerala375_23',
+            layerName: 'layer_Kerala375_23',
+            pane: 'pane_Kerala375_23',
+            onEachFeature: pop_Kerala375_23,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Kerala375_23_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Kerala375_23);
+        map.addLayer(layer_Kerala375_23);
+        function pop_AndhraPradesh420_24(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_AndhraPradesh420_24_0() {
+            return {
+                pane: 'pane_AndhraPradesh420_24',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(229,182,54,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_AndhraPradesh420_24');
+        map.getPane('pane_AndhraPradesh420_24').style.zIndex = 424;
+        map.getPane('pane_AndhraPradesh420_24').style['mix-blend-mode'] = 'normal';
+        var layer_AndhraPradesh420_24 = new L.geoJson(json_AndhraPradesh420_24, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_AndhraPradesh420_24',
+            layerName: 'layer_AndhraPradesh420_24',
+            pane: 'pane_AndhraPradesh420_24',
+            onEachFeature: pop_AndhraPradesh420_24,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_AndhraPradesh420_24_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_AndhraPradesh420_24);
+        map.addLayer(layer_AndhraPradesh420_24);
+        function pop_Gujarat516_25(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Gujarat516_25_0() {
+            return {
+                pane: 'pane_Gujarat516_25',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(243,166,178,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Gujarat516_25');
+        map.getPane('pane_Gujarat516_25').style.zIndex = 425;
+        map.getPane('pane_Gujarat516_25').style['mix-blend-mode'] = 'normal';
+        var layer_Gujarat516_25 = new L.geoJson(json_Gujarat516_25, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Gujarat516_25',
+            layerName: 'layer_Gujarat516_25',
+            pane: 'pane_Gujarat516_25',
+            onEachFeature: pop_Gujarat516_25,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Gujarat516_25_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Gujarat516_25);
+        map.addLayer(layer_Gujarat516_25);
+        function pop_Uttarpradesh483_26(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Uttarpradesh483_26_0() {
+            return {
+                pane: 'pane_Uttarpradesh483_26',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(141,90,153,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Uttarpradesh483_26');
+        map.getPane('pane_Uttarpradesh483_26').style.zIndex = 426;
+        map.getPane('pane_Uttarpradesh483_26').style['mix-blend-mode'] = 'normal';
+        var layer_Uttarpradesh483_26 = new L.geoJson(json_Uttarpradesh483_26, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Uttarpradesh483_26',
+            layerName: 'layer_Uttarpradesh483_26',
+            pane: 'pane_Uttarpradesh483_26',
+            onEachFeature: pop_Uttarpradesh483_26,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Uttarpradesh483_26_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Uttarpradesh483_26);
+        map.addLayer(layer_Uttarpradesh483_26);
+        function pop_Telangana531_27(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Telangana531_27_0() {
+            return {
+                pane: 'pane_Telangana531_27',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(114,155,111,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Telangana531_27');
+        map.getPane('pane_Telangana531_27').style.zIndex = 427;
+        map.getPane('pane_Telangana531_27').style['mix-blend-mode'] = 'normal';
+        var layer_Telangana531_27 = new L.geoJson(json_Telangana531_27, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Telangana531_27',
+            layerName: 'layer_Telangana531_27',
+            pane: 'pane_Telangana531_27',
+            onEachFeature: pop_Telangana531_27,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Telangana531_27_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Telangana531_27);
+        map.addLayer(layer_Telangana531_27);
+        function pop_MadhyaPradesh562_28(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_MadhyaPradesh562_28_0() {
+            return {
+                pane: 'pane_MadhyaPradesh562_28',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(225,89,137,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_MadhyaPradesh562_28');
+        map.getPane('pane_MadhyaPradesh562_28').style.zIndex = 428;
+        map.getPane('pane_MadhyaPradesh562_28').style['mix-blend-mode'] = 'normal';
+        var layer_MadhyaPradesh562_28 = new L.geoJson(json_MadhyaPradesh562_28, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_MadhyaPradesh562_28',
+            layerName: 'layer_MadhyaPradesh562_28',
+            pane: 'pane_MadhyaPradesh562_28',
+            onEachFeature: pop_MadhyaPradesh562_28,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_MadhyaPradesh562_28_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_MadhyaPradesh562_28);
+        map.addLayer(layer_MadhyaPradesh562_28);
+        function pop_Rajasthan815_29(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Rajasthan815_29_0() {
+            return {
+                pane: 'pane_Rajasthan815_29',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(164,113,88,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Rajasthan815_29');
+        map.getPane('pane_Rajasthan815_29').style.zIndex = 429;
+        map.getPane('pane_Rajasthan815_29').style['mix-blend-mode'] = 'normal';
+        var layer_Rajasthan815_29 = new L.geoJson(json_Rajasthan815_29, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Rajasthan815_29',
+            layerName: 'layer_Rajasthan815_29',
+            pane: 'pane_Rajasthan815_29',
+            onEachFeature: pop_Rajasthan815_29,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Rajasthan815_29_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Rajasthan815_29);
+        map.addLayer(layer_Rajasthan815_29);
+        function pop_TamilNadu1075_30(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_TamilNadu1075_30_0() {
+            return {
+                pane: 'pane_TamilNadu1075_30',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(213,180,60,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_TamilNadu1075_30');
+        map.getPane('pane_TamilNadu1075_30').style.zIndex = 430;
+        map.getPane('pane_TamilNadu1075_30').style['mix-blend-mode'] = 'normal';
+        var layer_TamilNadu1075_30 = new L.geoJson(json_TamilNadu1075_30, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_TamilNadu1075_30',
+            layerName: 'layer_TamilNadu1075_30',
+            pane: 'pane_TamilNadu1075_30',
+            onEachFeature: pop_TamilNadu1075_30,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_TamilNadu1075_30_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_TamilNadu1075_30);
+        map.addLayer(layer_TamilNadu1075_30);
+        function pop_Delhi1154_31(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Delhi1154_31_0() {
+            return {
+                pane: 'pane_Delhi1154_31',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(213,180,60,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Delhi1154_31');
+        map.getPane('pane_Delhi1154_31').style.zIndex = 431;
+        map.getPane('pane_Delhi1154_31').style['mix-blend-mode'] = 'normal';
+        var layer_Delhi1154_31 = new L.geoJson(json_Delhi1154_31, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Delhi1154_31',
+            layerName: 'layer_Delhi1154_31',
+            pane: 'pane_Delhi1154_31',
+            onEachFeature: pop_Delhi1154_31,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Delhi1154_31_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Delhi1154_31);
+        map.addLayer(layer_Delhi1154_31);
+        function pop_Maharastra1982_32(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Maharastra1982_32_0() {
+            return {
+                pane: 'pane_Maharastra1982_32',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(229,182,54,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Maharastra1982_32');
+        map.getPane('pane_Maharastra1982_32').style.zIndex = 432;
+        map.getPane('pane_Maharastra1982_32').style['mix-blend-mode'] = 'normal';
+        var layer_Maharastra1982_32 = new L.geoJson(json_Maharastra1982_32, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Maharastra1982_32',
+            layerName: 'layer_Maharastra1982_32',
+            pane: 'pane_Maharastra1982_32',
+            onEachFeature: pop_Maharastra1982_32,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Maharastra1982_32_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Maharastra1982_32);
+        map.addLayer(layer_Maharastra1982_32);
+        function pop_ScrolldownforStatewisedata_33(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_ScrolldownforStatewisedata_33_0() {
+            return {
+                pane: 'pane_ScrolldownforStatewisedata_33',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(232,113,141,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_ScrolldownforStatewisedata_33');
+        map.getPane('pane_ScrolldownforStatewisedata_33').style.zIndex = 433;
+        map.getPane('pane_ScrolldownforStatewisedata_33').style['mix-blend-mode'] = 'normal';
+        var layer_ScrolldownforStatewisedata_33 = new L.geoJson(json_ScrolldownforStatewisedata_33, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_ScrolldownforStatewisedata_33',
+            layerName: 'layer_ScrolldownforStatewisedata_33',
+            pane: 'pane_ScrolldownforStatewisedata_33',
+            onEachFeature: pop_ScrolldownforStatewisedata_33,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_ScrolldownforStatewisedata_33_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_ScrolldownforStatewisedata_33);
+        map.addLayer(layer_ScrolldownforStatewisedata_33);
+        function pop_DistrictwiseCOVID19_34(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">State</th>\
+                        <td>' + (feature.properties['State'] !== null ? Autolinker.link(feature.properties['State'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">District</th>\
+                        <td>' + (feature.properties['District'] !== null ? Autolinker.link(feature.properties['District'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Cases</th>\
+                        <td>' + (feature.properties['Cases'] !== null ? Autolinker.link(feature.properties['Cases'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_DistrictwiseCOVID19_34_0(feature) {
+            if (feature.properties['Cases'] >= 0.000000 && feature.properties['Cases'] <= 0.000000 ) {
+                return {
+                pane: 'pane_DistrictwiseCOVID19_34',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Cases'] >= 0.000000 && feature.properties['Cases'] <= 6.000000 ) {
+                return {
+                pane: 'pane_DistrictwiseCOVID19_34',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(100,171,176,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Cases'] >= 6.000000 && feature.properties['Cases'] <= 12.000000 ) {
+                return {
+                pane: 'pane_DistrictwiseCOVID19_34',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(157,211,167,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Cases'] >= 12.000000 && feature.properties['Cases'] <= 18.000000 ) {
+                return {
+                pane: 'pane_DistrictwiseCOVID19_34',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(199,233,173,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Cases'] >= 18.000000 && feature.properties['Cases'] <= 24.000000 ) {
+                return {
+                pane: 'pane_DistrictwiseCOVID19_34',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(237,248,185,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Cases'] >= 24.000000 && feature.properties['Cases'] <= 32.000000 ) {
+                return {
+                pane: 'pane_DistrictwiseCOVID19_34',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,237,170,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Cases'] >= 32.000000 && feature.properties['Cases'] <= 44.000000 ) {
+                return {
+                pane: 'pane_DistrictwiseCOVID19_34',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,201,128,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Cases'] >= 44.000000 && feature.properties['Cases'] <= 81.000000 ) {
+                return {
+                pane: 'pane_DistrictwiseCOVID19_34',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(249,158,89,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Cases'] >= 81.000000 && feature.properties['Cases'] <= 136.000000 ) {
+                return {
+                pane: 'pane_DistrictwiseCOVID19_34',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(232,91,58,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Cases'] >= 136.000000 && feature.properties['Cases'] <= 320.000000 ) {
+                return {
+                pane: 'pane_DistrictwiseCOVID19_34',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(215,25,28,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_DistrictwiseCOVID19_34');
+        map.getPane('pane_DistrictwiseCOVID19_34').style.zIndex = 434;
+        map.getPane('pane_DistrictwiseCOVID19_34').style['mix-blend-mode'] = 'normal';
+        var layer_DistrictwiseCOVID19_34 = new L.geoJson(json_DistrictwiseCOVID19_34, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_DistrictwiseCOVID19_34',
+            layerName: 'layer_DistrictwiseCOVID19_34',
+            pane: 'pane_DistrictwiseCOVID19_34',
+            onEachFeature: pop_DistrictwiseCOVID19_34,
+            style: style_DistrictwiseCOVID19_34_0,
+        });
+        bounds_group.addLayer(layer_DistrictwiseCOVID19_34);
+        map.addLayer(layer_DistrictwiseCOVID19_34);
+        function pop_Cured1086_35(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Cured1086_35_0() {
+            return {
+                pane: 'pane_Cured1086_35',
+                radius: 2.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,158,23,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Cured1086_35');
+        map.getPane('pane_Cured1086_35').style.zIndex = 435;
+        map.getPane('pane_Cured1086_35').style['mix-blend-mode'] = 'normal';
+        var layer_Cured1086_35 = new L.geoJson(json_Cured1086_35, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Cured1086_35',
+            layerName: 'layer_Cured1086_35',
+            pane: 'pane_Cured1086_35',
+            onEachFeature: pop_Cured1086_35,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Cured1086_35_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Cured1086_35);
+        map.addLayer(layer_Cured1086_35);
+        function pop_TotalActivecases9222_36(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_TotalActivecases9222_36_0() {
+            return {
+                pane: 'pane_TotalActivecases9222_36',
+                radius: 1.833334,
+                opacity: 1,
+                color: 'rgba(184,8,8,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(184,8,8,1.0)',
+                interactive: true,
+            }
+        }
+        function style_TotalActivecases9222_36_1() {
+            return {
+                pane: 'pane_TotalActivecases9222_36',
+                radius: 2.0,
+                opacity: 1,
+                color: 'rgba(255,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,0,0,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_TotalActivecases9222_36');
+        map.getPane('pane_TotalActivecases9222_36').style.zIndex = 436;
+        map.getPane('pane_TotalActivecases9222_36').style['mix-blend-mode'] = 'normal';
+        var layer_TotalActivecases9222_36 = new L.geoJson.multiStyle(json_TotalActivecases9222_36, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_TotalActivecases9222_36',
+            layerName: 'layer_TotalActivecases9222_36',
+            pane: 'pane_TotalActivecases9222_36',
+            onEachFeature: pop_TotalActivecases9222_36,
+            pointToLayers: [function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_TotalActivecases9222_36_0(feature));
+            },function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_TotalActivecases9222_36_1(feature));
+            },
+        ]});
+        bounds_group.addLayer(layer_TotalActivecases9222_36);
+        map.addLayer(layer_TotalActivecases9222_36);
+        function pop_Lastupdated130420200952AM_37(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? Autolinker.link(feature.properties['Id'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Lastupdated130420200952AM_37_0() {
+            return {
+                pane: 'pane_Lastupdated130420200952AM_37',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(190,207,80,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Lastupdated130420200952AM_37');
+        map.getPane('pane_Lastupdated130420200952AM_37').style.zIndex = 437;
+        map.getPane('pane_Lastupdated130420200952AM_37').style['mix-blend-mode'] = 'normal';
+        var layer_Lastupdated130420200952AM_37 = new L.geoJson(json_Lastupdated130420200952AM_37, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Lastupdated130420200952AM_37',
+            layerName: 'layer_Lastupdated130420200952AM_37',
+            pane: 'pane_Lastupdated130420200952AM_37',
+            onEachFeature: pop_Lastupdated130420200952AM_37,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Lastupdated130420200952AM_37_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Lastupdated130420200952AM_37);
+        map.addLayer(layer_Lastupdated130420200952AM_37);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/Lastupdated130420200952AM_37.png" /> Last updated: 13-04-2020; 09:52 AM': layer_Lastupdated130420200952AM_37,'<img src="legend/TotalActivecases9222_36.png" /> Total Active cases (9222)': layer_TotalActivecases9222_36,'<img src="legend/Cured1086_35.png" /> Cured (1086)': layer_Cured1086_35,'District wise COVID-19<br /><table><tr><td style="text-align: center;"><img src="legend/DistrictwiseCOVID19_34_000.png" /></td><td>0 - 0</td></tr><tr><td style="text-align: center;"><img src="legend/DistrictwiseCOVID19_34_061.png" /></td><td>0 - 6</td></tr><tr><td style="text-align: center;"><img src="legend/DistrictwiseCOVID19_34_6122.png" /></td><td>6 - 12</td></tr><tr><td style="text-align: center;"><img src="legend/DistrictwiseCOVID19_34_12183.png" /></td><td>12 - 18</td></tr><tr><td style="text-align: center;"><img src="legend/DistrictwiseCOVID19_34_18244.png" /></td><td>18 - 24</td></tr><tr><td style="text-align: center;"><img src="legend/DistrictwiseCOVID19_34_24325.png" /></td><td>24 - 32</td></tr><tr><td style="text-align: center;"><img src="legend/DistrictwiseCOVID19_34_32446.png" /></td><td>32 - 44</td></tr><tr><td style="text-align: center;"><img src="legend/DistrictwiseCOVID19_34_44817.png" /></td><td>44 - 81</td></tr><tr><td style="text-align: center;"><img src="legend/DistrictwiseCOVID19_34_811368.png" /></td><td>81 - 136</td></tr><tr><td style="text-align: center;"><img src="legend/DistrictwiseCOVID19_34_1363209.png" /></td><td>136 - 320</td></tr></table>': layer_DistrictwiseCOVID19_34,'<img src="legend/ScrolldownforStatewisedata_33.png" /> Scroll down for Statewise data': layer_ScrolldownforStatewisedata_33,'<img src="legend/Maharastra1982_32.png" /> Maharastra (1982)': layer_Maharastra1982_32,'<img src="legend/Delhi1154_31.png" /> Delhi (1154)': layer_Delhi1154_31,'<img src="legend/TamilNadu1075_30.png" /> Tamil Nadu (1075)': layer_TamilNadu1075_30,'<img src="legend/Rajasthan815_29.png" /> Rajasthan (815)': layer_Rajasthan815_29,'<img src="legend/MadhyaPradesh562_28.png" /> Madhya Pradesh (562)': layer_MadhyaPradesh562_28,'<img src="legend/Telangana531_27.png" /> Telangana (531)': layer_Telangana531_27,'<img src="legend/Uttarpradesh483_26.png" /> Uttarpradesh (483)': layer_Uttarpradesh483_26,'<img src="legend/Gujarat516_25.png" /> Gujarat (516)': layer_Gujarat516_25,'<img src="legend/AndhraPradesh420_24.png" /> Andhra Pradesh (420)': layer_AndhraPradesh420_24,'<img src="legend/Kerala375_23.png" /> Kerala (375)': layer_Kerala375_23,'<img src="legend/JK245_22.png" /> J&K (245)': layer_JK245_22,'<img src="legend/Karnataka232_21.png" /> Karnataka (232)': layer_Karnataka232_21,'<img src="legend/Haryana195_20.png" /> Haryana (195)': layer_Haryana195_20,'<img src="legend/Punjab170_19.png" /> Punjab (170)': layer_Punjab170_19,'<img src="legend/Westbengal134_18.png" /> Westbengal (134)': layer_Westbengal134_18,'<img src="legend/Bihar64_17.png" /> Bihar (64)': layer_Bihar64_17,'<img src="legend/Odisha54_16.png" /> Odisha (54)': layer_Odisha54_16,'<img src="legend/Uttarakhand35_15.png" /> Uttarakhand (35)': layer_Uttarakhand35_15,'<img src="legend/HimachalPradesh32_14.png" /> Himachal Pradesh (32)': layer_HimachalPradesh32_14,'<img src="legend/Chhattisgarh31_13.png" /> Chhattisgarh (31)': layer_Chhattisgarh31_13,'<img src="legend/Assam29_12.png" /> Assam (29)': layer_Assam29_12,'<img src="legend/Chandigarh21_11.png" /> Chandigarh (21)': layer_Chandigarh21_11,'<img src="legend/Ladakh15_10.png" /> Ladakh (15)': layer_Ladakh15_10,'<img src="legend/Jharkhand17_9.png" /> Jharkhand (17)': layer_Jharkhand17_9,'<img src="legend/ANIslands11_8.png" /> A&N Islands (11)': layer_ANIslands11_8,'<img src="legend/Goa7_7.png" /> Goa (7)': layer_Goa7_7,'<img src="legend/Puducherry7_6.png" /> Puducherry (7)': layer_Puducherry7_6,'<img src="legend/Manipur2_5.png" /> Manipur (2)': layer_Manipur2_5,'<img src="legend/Tripura2_4.png" /> Tripura (2)': layer_Tripura2_4,'<img src="legend/DNHaveli1_3.png" /> D&N Haveli (1)': layer_DNHaveli1_3,'<img src="legend/ArunachalPradesh1_2.png" /> Arunachal Pradesh (1)': layer_ArunachalPradesh1_2,'<img src="legend/Mizoram1_1.png" /> Mizoram (1)': layer_Mizoram1_1,"Esri background layer": layer_Esribackgroundlayer_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
